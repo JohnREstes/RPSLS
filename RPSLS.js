@@ -4,7 +4,7 @@ class Player {
 
     constructor(name){
         this.name = name;
-        this.choice = ['rock ', 'paper ', 'scissor ', 'lizard ', 'Spock '];
+        this.choice = ['rock', 'paper', 'scissor', 'lizard', 'spock'];
         this.turn = '';
         this.win = [];
     } 
@@ -12,7 +12,7 @@ class Player {
      console.log("The Player is named " + this.name + ".");
     }
     playTurn(){
-        return this.turn = prompt("Would you like to choose:\n" + this.choice).toLowerCase;
+        return this.turn = prompt("Would you like to choose:\n" + this.choice);
     }
 }
 
@@ -32,18 +32,7 @@ class Computer extends Player{
 }
 
 class Game {
-    let whoWonArray = {
-        ['Rock', 'crushes', 'Scissors'],
-        ['Rock', 'crushes', 'Lizard'],
-        ['Paper', 'covers', 'Rock'],
-        ['Paper', 'disproves', 'Spock'],
-        ['Scissors', 'cuts', 'Paper'],
-        ['Scissors', 'decapitates', 'Lizard'],
-        ['Lizard', 'poisons', 'Spock'],
-        ['Lizard', 'eats', 'Paper'],
-        ['Spock', 'smashes', 'Scissors'],
-        ['Spock', 'vaporizes', 'Rock']
-    }
+
     constructor(){
         this.playerOne = null;
         this.playerTwo = null;
@@ -95,7 +84,7 @@ class Game {
                 case 'one':
                 case 'two':
                     this.chooseNumberOfPlayers(promptResponse);
-                    
+                    this.gamePlay();
                     break;
                 case 'quit':
                     break;
@@ -113,8 +102,34 @@ class Game {
 
     }  
     whoWon(playerOneTurn, playerTwoTurn){
-
+        console.log(playerOneTurn + playerTwoTurn);
+        if(playerOneTurn === playerTwoTurn){
+            alert(`Tie\n\n${whoWonArray[i][0]} is the same as ${whoWonArray[i][2]}`);
+        }
+        else{
+            for(let i = 0; i < whoWonArray.length; i++){
+                if(playerOneTurn == whoWonArray[i][0] && playerTwoTurn == whoWonArray[i][2]){
+                    alert(`Player One Wins:\n\n${whoWonArray[i][0]} ${whoWonArray[i][1]} ${whoWonArray[i][2]}`);
+                }
+                else if(playerTwoTurn == whoWonArray[i][0] && playerOneTurn == whoWonArray[i][2]){
+                    alert(`Player two Wins:\n\n${whoWonArray[i][0]} ${whoWonArray[i][1]} ${whoWonArray[i][2]}`);
+                }
+            }
+        }
     } 
 }
+const whoWonArray = [
+    ['rock', 'crushes', 'scissors'],
+    ['rock', 'crushes', 'lizard'],
+    ['paper', 'covers', 'rock'],
+    ['paper', 'disproves', 'spock'],
+    ['scissors', 'cuts', 'paper'],
+    ['scissors', 'decapitates', 'lizard'],
+    ['lizard', 'poisons', 'spock'],
+    ['lizard', 'eats', 'paper'],
+    ['spock', 'smashes', 'scissors'],
+    ['spock', 'vaporizes', 'rock']
+]
+
 let gamePlay = new Game();
 gamePlay.mainMenu();
