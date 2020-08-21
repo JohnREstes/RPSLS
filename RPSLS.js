@@ -12,7 +12,14 @@ class Player {
      console.log("The Player is named " + this.name + ".");
     }
     playTurn(){
-        return this.turn = prompt("Would you like to choose:\n" + this.choice);
+        return this.turn = prompt("Would you like to choose:\n" + this.buildChoices()).toLowerCase();
+    }
+    buildChoices(){
+        let returnString = ""
+        this.choice.map(function(el){
+            returnString += el + "  "
+        })
+        return returnString
     }
 }
 
@@ -36,6 +43,18 @@ class Game {
     constructor(){
         this.playerOne = null;
         this.playerTwo = null;
+        this.whoWonArray = [
+            ['rock', 'crushes', 'scissors'],
+            ['rock', 'crushes', 'lizard'],
+            ['paper', 'covers', 'rock'],
+            ['paper', 'disproves', 'spock'],
+            ['scissors', 'cuts', 'paper'],
+            ['scissors', 'decapitates', 'lizard'],
+            ['lizard', 'poisons', 'spock'],
+            ['lizard', 'eats', 'paper'],
+            ['spock', 'smashes', 'scissors'],
+            ['spock', 'vaporizes', 'rock']
+        ]
     }
 
     chooseNumberOfPlayers(userInput){
@@ -52,7 +71,7 @@ class Game {
     mainMenu(){
         let promptResponse = "";   
         do{
-            promptResponse = prompt("Welcome to Rock, Paper, Scissor, Lizard, Spock!\n\nWould you like to play best of three or see the rules?\n\nType the option you want: 'play' 'rules' or 'quit'");
+            promptResponse = prompt("Welcome to Rock, Paper, Scissor, Lizard, Spock!\n\nWould you like to play best of three or see the rules?\n\nType the option you want: 'play' 'rules' or 'quit'").toLowerCase();
             switch(promptResponse){
                 case 'play':
                     this.howManyPlayers();
@@ -78,7 +97,7 @@ class Game {
     howManyPlayers(){
         let promptResponse = "";   
         do{
-            promptResponse = prompt("How Many Players?\n\nType the option you want: 'one' 'two' or 'quit'");
+            promptResponse = prompt("How Many Players?\n\nType the option you want: 'one' 'two' or 'quit'").toLowerCase();
             switch(promptResponse){
                 case 'one':
                 case 'two':
@@ -115,19 +134,20 @@ class Game {
         }
 
     }  
+    
     whoWon(playerOneTurn, playerTwoTurn){
         if(playerOneTurn === playerTwoTurn){
             alert(`Tie\n\nYou both chose ${playerTwoTurn}`);
         }
         else{
-            for(let i = 0; i < whoWonArray.length; i++){
-                if(playerOneTurn == whoWonArray[i][0] && playerTwoTurn == whoWonArray[i][2]){
-                    alert(`Player One Wins:\n\n${whoWonArray[i][0]} ${whoWonArray[i][1]} ${whoWonArray[i][2]}`);
+            for(let i = 0; i < this.whoWonArray.length; i++){
+                if(playerOneTurn == this.whoWonArray[i][0] && playerTwoTurn == this.whoWonArray[i][2]){
+                    alert(`Player One Wins:\n\n${this.whoWonArray[i][0]} ${this.whoWonArray[i][1]} ${this.whoWonArray[i][2]}`);
                     this.playerOne.win.push(true);
                     this.playerTwo.win.push(false);
                 }
-                else if(playerTwoTurn == whoWonArray[i][0] && playerOneTurn == whoWonArray[i][2]){
-                    alert(`Player Two Wins:\n\n${whoWonArray[i][0]} ${whoWonArray[i][1]} ${whoWonArray[i][2]}`);
+                else if(playerTwoTurn == this.whoWonArray[i][0] && playerOneTurn == this.whoWonArray[i][2]){
+                    alert(`Player Two Wins:\n\n${this.whoWonArray[i][0]} ${this.whoWonArray[i][1]} ${this.whoWonArray[i][2]}`);
                     this.playerTwo.win.push(true);
                     this.playerOne.win.push(false);
                 }
@@ -135,19 +155,6 @@ class Game {
         }
     } 
 }
-
-const whoWonArray = [
-    ['rock', 'crushes', 'scissors'],
-    ['rock', 'crushes', 'lizard'],
-    ['paper', 'covers', 'rock'],
-    ['paper', 'disproves', 'spock'],
-    ['scissors', 'cuts', 'paper'],
-    ['scissors', 'decapitates', 'lizard'],
-    ['lizard', 'poisons', 'spock'],
-    ['lizard', 'eats', 'paper'],
-    ['spock', 'smashes', 'scissors'],
-    ['spock', 'vaporizes', 'rock']
-]
 
 let gamePlay = new Game();
 gamePlay.mainMenu();
