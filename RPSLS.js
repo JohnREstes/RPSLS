@@ -56,7 +56,6 @@ class Game {
             switch(promptResponse){
                 case 'play':
                     this.howManyPlayers();
-                    this.gamePlay();
                     break;
                 case 'rules':
                     this.rules();
@@ -85,7 +84,7 @@ class Game {
                 case 'two':
                     this.chooseNumberOfPlayers(promptResponse);
                     this.gamePlay();
-                    break;
+                    return
                 case 'quit':
                     break;
                 default:
@@ -96,28 +95,47 @@ class Game {
     }
 
     gamePlay(){
-        let playerOneTurn = this.playerOne.playTurn();
-        let playerTwoTurn = this.playerTwo.playTurn();
-        this.whoWon(playerOneTurn, playerTwoTurn);
+        do{
+            let playerOneTurn = this.playerOne.playTurn();
+            let playerTwoTurn = this.playerTwo.playTurn();
+            this.whoWon(playerOneTurn, playerTwoTurn);
+        }
+        while(this.playerOne.win.length < 3)
+        let theWinner = 0;
+        for(let i = 0; i < 3; i++){    
+            if(this.playerOne.win[i] == true){
+                theWinner++; 
+            }  
+        }
+        if(theWinner >= 2){
+            alert("Player One Wins\n\nHURRAH");
+        }
+        else{
+            alert("Player Two Wins\n\nHURRAH");
+        }
 
     }  
     whoWon(playerOneTurn, playerTwoTurn){
-        console.log(playerOneTurn + playerTwoTurn);
         if(playerOneTurn === playerTwoTurn){
-            alert(`Tie\n\n${whoWonArray[i][0]} is the same as ${whoWonArray[i][2]}`);
+            alert(`Tie\n\nYou both chose ${playerTwoTurn}`);
         }
         else{
             for(let i = 0; i < whoWonArray.length; i++){
                 if(playerOneTurn == whoWonArray[i][0] && playerTwoTurn == whoWonArray[i][2]){
                     alert(`Player One Wins:\n\n${whoWonArray[i][0]} ${whoWonArray[i][1]} ${whoWonArray[i][2]}`);
+                    this.playerOne.win.push(true);
+                    this.playerTwo.win.push(false);
                 }
                 else if(playerTwoTurn == whoWonArray[i][0] && playerOneTurn == whoWonArray[i][2]){
-                    alert(`Player two Wins:\n\n${whoWonArray[i][0]} ${whoWonArray[i][1]} ${whoWonArray[i][2]}`);
+                    alert(`Player Two Wins:\n\n${whoWonArray[i][0]} ${whoWonArray[i][1]} ${whoWonArray[i][2]}`);
+                    this.playerTwo.win.push(true);
+                    this.playerOne.win.push(false);
                 }
             }
         }
     } 
 }
+
 const whoWonArray = [
     ['rock', 'crushes', 'scissors'],
     ['rock', 'crushes', 'lizard'],
