@@ -4,7 +4,7 @@ class Player {
 
     constructor(name){
         this.name = name;
-        this.choice = ['rock', 'paper', 'scissor', 'lizard', 'spock'];
+        this.choice = ['rock', 'paper', 'scissors', 'lizard', 'spock'];
         this.turn = '';
         this.win = [];
     } 
@@ -12,7 +12,7 @@ class Player {
      console.log("The Player is named " + this.name + ".");
     }
     playTurn(){
-        return this.turn = prompt("Would you like to choose:\n" + this.buildChoices()).toLowerCase();
+        return this.turn = prompt(this.name +", what would you like to choose:\n" + this.buildChoices()).toLowerCase();
     }
     buildChoices(){
         let returnString = ""
@@ -59,19 +59,22 @@ class Game {
 
     chooseNumberOfPlayers(userInput){
         if(userInput == "one"){
-            this.playerOne = new Human();
-            this.playerTwo = new Computer();
+            let playerOneName = prompt("What is your name?")
+            this.playerOne = new Human(playerOneName);
+            this.playerTwo = new Computer("Computer");
         }
         else{
-            this.playerOne = new Human();
-            this.playerTwo = new Human();           
+            let playerOneName = prompt("What is player one's name?")
+            let playerTwoName = prompt("What is player two's name?")
+            this.playerOne = new Human(playerOneName);
+            this.playerTwo = new Human(playerTwoName);           
         }
     }
 
     mainMenu(){
         let promptResponse = "";   
         do{
-            promptResponse = prompt("Welcome to Rock, Paper, Scissor, Lizard, Spock!\n\nWould you like to play best of three or see the rules?\n\nType the option you want: 'play' 'rules' or 'quit'").toLowerCase();
+            promptResponse = prompt("Welcome to Rock, Paper, Scissors, Lizard, Spock!\n\nWould you like to play best of three or see the rules?\n\nType the option you want: 'play' 'rules' or 'quit'").toLowerCase();
             switch(promptResponse){
                 case 'play':
                     this.howManyPlayers();
@@ -127,27 +130,27 @@ class Game {
             }  
         }
         if(theWinner >= 2){
-            alert("Player One Wins\n\nHURRAH");
+            alert(`${this.playerOne.name} Wins\n\nHURRAH`);
         }
         else{
-            alert("Player Two Wins\n\nHURRAH");
+            alert(`${this.playerTwo.name} Wins\n\nHURRAH`);
         }
 
     }  
     
     whoWon(playerOneTurn, playerTwoTurn){
         if(playerOneTurn === playerTwoTurn){
-            alert(`Tie\n\nYou both chose ${playerTwoTurn}`);
+            alert(`Tie\n\n${this.playerOne.name} and ${this.playerTwo.name} both chose ${playerTwoTurn}`);
         }
         else{
             for(let i = 0; i < this.whoWonArray.length; i++){
                 if(playerOneTurn == this.whoWonArray[i][0] && playerTwoTurn == this.whoWonArray[i][2]){
-                    alert(`Player One Wins:\n\n${this.whoWonArray[i][0]} ${this.whoWonArray[i][1]} ${this.whoWonArray[i][2]}`);
+                    alert(`${this.playerOne.name} Wins:\n\n${this.whoWonArray[i][0]} ${this.whoWonArray[i][1]} ${this.whoWonArray[i][2]}`);
                     this.playerOne.win.push(true);
                     this.playerTwo.win.push(false);
                 }
                 else if(playerTwoTurn == this.whoWonArray[i][0] && playerOneTurn == this.whoWonArray[i][2]){
-                    alert(`Player Two Wins:\n\n${this.whoWonArray[i][0]} ${this.whoWonArray[i][1]} ${this.whoWonArray[i][2]}`);
+                    alert(`${this.playerTwo.name} Wins:\n\n${this.whoWonArray[i][0]} ${this.whoWonArray[i][1]} ${this.whoWonArray[i][2]}`);
                     this.playerTwo.win.push(true);
                     this.playerOne.win.push(false);
                 }
